@@ -15,13 +15,13 @@ const createBlog = () => {
     const blog = { title, content, author };
 
     try {
-      const response = await fetch("http://localhost:3000/blogs", {
+      const response = await fetch("http://localhost:3000/blogs/createblog", {
         method: "POST",
+        body: JSON.stringify(blog),
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(blog),
-      }).then((response) => response.json());
+      });
 
       if (response) {
         const data = await response.json();
@@ -49,14 +49,7 @@ const createBlog = () => {
             onChange={(e) => setTitle(e.target.value)}
             className="border-2 w-3/4 h-10 mb-10"
           />
-          {/* <input
-            type="text"
-            name="title"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="border-2 w-3/4 h-10 mb-10"
-          /> */}
+
           <p className="text-2xl mb-4">Blog Author:</p>
           <Input
             name="author"
@@ -65,14 +58,7 @@ const createBlog = () => {
             onChange={(e) => setAuthor(e.target.value)}
             className="border-2 w-3/4 h-10 mb-10"
           />
-          {/* <input
-            type="text"
-            name="author"
-            id="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            className="border-2 w-3/4 h-10 mb-10"
-          /> */}
+
           <p className="text-2xl mb-4">Blog Description:</p>
           <JoditEditor
             ref={editor}
@@ -90,13 +76,6 @@ const createBlog = () => {
             className="bg-blue-600 text-white font-medium p-2 rounded-xl absolute left-1/2"
             btnText="Save Blog"
           />
-
-          {/* <button
-            type="submit"
-            className="bg-blue-600 text-white font-medium p-2 rounded-xl absolute left-1/2"
-          >
-            Save Blog
-          </button> */}
         </div>
       </div>
     </form>

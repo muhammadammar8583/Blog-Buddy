@@ -9,13 +9,13 @@ app.listen(process.env.PORT, () => {
   console.log("App listening on Port:", process.env.PORT);
 });
 
+//Midllewares
+app.use(cors());
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("<h1>Hello World!</h1>");
 });
-
-//Midllewares
-app.use(cors);
-app.use(express.json());
 
 //Database connect
 dbConnect;
