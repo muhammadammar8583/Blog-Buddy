@@ -36,7 +36,7 @@ const createBlog = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mt-10">
+      <div className="mt-10 overflow-y-scroll no-scrollbar">
         <h2 className="text-4xl text-center font-medium mb-10">
           What's on your mind? Care to share with us!
         </h2>

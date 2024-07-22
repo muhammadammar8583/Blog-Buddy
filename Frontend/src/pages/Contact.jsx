@@ -22,10 +22,10 @@ const Contact = () => {
   const [agreed, setAgreed] = useState(false);
 
   return (
-    <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8 overflow-y-scroll scrollbar-hide">
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
+        className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem] "
       >
         <div
           style={{
@@ -48,7 +48,7 @@ const Contact = () => {
         method="POST"
         className="mx-auto mt-16 max-w-xl sm:mt-20"
       >
-        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 overflow-y-scroll no-scrollbar">
           <div>
             <label
               htmlFor="first-name"

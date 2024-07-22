@@ -1,5 +1,6 @@
 import Home from "../pages/Home.jsx";
 import CreateBlog from "../pages/createBlog.jsx";
+import BlogDetail from "../pages/blogDetail.jsx";
 import About from "../pages/About.jsx";
 import Contact from "../pages/Contact.jsx";
 import Error404 from "../pages/Error404.jsx";
@@ -9,6 +10,7 @@ const routesName = [
   { path: "/", element: <Home /> },
   { path: "/blogs", element: <Blogs /> },
   { path: "/createblog", element: <CreateBlog /> },
+  { path: "/blogs/:id", element: <BlogDetail /> },
   { path: "/about", element: <About /> },
   { path: "/contact", element: <Contact /> },
   { path: "*", element: <Error404 /> },
