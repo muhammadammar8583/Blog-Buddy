@@ -10,6 +10,7 @@ const routesName = [
   { path: "/", element: <Home /> },
   { path: "/blogs", element: <Blogs /> },
   { path: "/createblog", element: <CreateBlog /> },
+  { path: "/createblog/:id", element: <CreateBlog /> },
   { path: "/blogs/:id", element: <BlogDetail /> },
   { path: "/about", element: <About /> },
   { path: "/contact", element: <Contact /> },

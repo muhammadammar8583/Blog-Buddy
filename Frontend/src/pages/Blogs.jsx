@@ -7,7 +7,7 @@ const Blogs = () => {
 
   useEffect(() => {
     const getData = async () => {
-      let response = await fetch(`http://localhost:3000/blogs`);
+      let response = await fetch("http://localhost:3000/blogs");
       let data = await response.json();
       setAllBlogs(data);
     };
@@ -15,12 +15,29 @@ const Blogs = () => {
   }, []);
 
   const navigate = useNavigate();
+
   const getBlog = (e) => {
     navigate(`/blogs/${e._id}`, { state: e });
   };
 
+  const deleteBlog = async (id) => {
+    try {
+      await fetch(`http://localhost:3000/blogs/${id}`, {
+        method: "DELETE",
+      });
+      //Update the state to remove the deleted blog
+      setAllBlogs(allBlogs.filter((blog) => blog._id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateBlog = async (blog) => {
+    navigate(`/createBlog/${blog._id}`, { state: blog });
+  };
+
   return (
-    <div>
+    <div className="flex flex-wrap">
       {allBlogs
         ? allBlogs.map((data, index) => {
             return (
@@ -29,6 +46,12 @@ const Blogs = () => {
                 data={data}
                 viewBlog={() => {
                   getBlog(data);
+                }}
+                deleteBlog={() => {
+                  deleteBlog(data._id);
+                }}
+                updateBlog={() => {
+                  updateBlog(data);
                 }}
               />
             );

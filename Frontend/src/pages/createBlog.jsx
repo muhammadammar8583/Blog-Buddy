@@ -1,33 +1,56 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import Input from "../reuseable/Input";
 import Button from "../reuseable/Button";
+import { useLocation } from "react-router-dom";
 
 const createBlog = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
 
+  const location = useLocation();
   const editor = useRef(null);
+
+  useEffect(() => {
+    if (location.state) {
+      const { title, author, content } = location.state;
+      setTitle(title), setAuthor(author), setContent(content), setIsEdit(true);
+    }
+  }, [location.state]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const blog = { title, content, author };
 
     try {
-      const response = await fetch("http://localhost:3000/blogs/createblog", {
-        method: "POST",
-        body: JSON.stringify(blog),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
+      let response;
+      if (isEdit) {
+        response = await fetch(
+          `http://localhost:3000/blogs/${location.state._id}`,
+          {
+            method: "PUT",
+            body: JSON.stringify(blog),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } else {
+        response = await fetch("http://localhost:3000/blogs/createblog", {
+          method: "POST",
+          body: JSON.stringify(blog),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      }
       if (response) {
         const data = await response.json();
-        console.log("Blog saved:", data);
+        console.log(isEdit ? "Blog Updated" : "Blog saved:", data);
       } else {
-        console.error("Failed to save blog");
+        console.error(isEdit ? "Failed to upate blog" : "Failed to save blog");
       }
     } catch (error) {
       console.log(error);
@@ -38,7 +61,9 @@ const createBlog = () => {
     <form onSubmit={handleSubmit}>
       <div className="mt-10 overflow-y-scroll no-scrollbar">
         <h2 className="text-4xl text-center font-medium mb-10">
-          What's on your mind? Care to share with us!
+          {isEdit
+            ? "Edit Your Blog"
+            : "What's on your mind? Care to share with us!"}
         </h2>
         <div className="">
           <p className="text-2xl mb-4">Blog Title</p>
@@ -74,7 +99,7 @@ const createBlog = () => {
           <Button
             type="submit"
             className="bg-blue-600 text-white font-medium p-2 rounded-xl absolute left-1/2"
-            btnText="Save Blog"
+            btnText={isEdit ? "Update Blog" : "Save Blog"}
           />
         </div>
       </div>

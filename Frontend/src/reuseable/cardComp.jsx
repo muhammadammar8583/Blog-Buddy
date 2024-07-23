@@ -1,9 +1,9 @@
 import React from "react";
 import Button from "../reuseable/Button.jsx";
 
-const cardComp = ({ data, viewBlog }) => {
+const cardComp = ({ data, viewBlog, deleteBlog, updateBlog }) => {
   return (
-    <div className="ml-5 mt-5 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="p-4 ml-5 mt-5 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <a href="#">
         <img
           className="rounded-t-lg"
@@ -25,7 +25,17 @@ const cardComp = ({ data, viewBlog }) => {
         <Button
           btnText="Read More"
           onClick={viewBlog}
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="mr-1 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        />
+        <Button
+          btnText="Delete Blog"
+          onClick={deleteBlog}
+          className=" mr-1 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        />
+        <Button
+          btnText="Update Blog"
+          onClick={updateBlog}
+          className=" items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         />
         {/* <Link
           to={viewBlog}
