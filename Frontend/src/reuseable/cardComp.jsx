@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../reuseable/Button.jsx";
+import HTMLReactParser from "html-react-parser";
 
 const cardComp = ({ data, viewBlog, deleteBlog, updateBlog }) => {
   return (
@@ -20,7 +21,7 @@ const cardComp = ({ data, viewBlog, deleteBlog, updateBlog }) => {
           {data.author}
         </h6>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {data.content.slice(0, 24)}
+          {HTMLReactParser(data.content.slice(0, 60))}
         </p>
         <Button
           btnText="Read More"

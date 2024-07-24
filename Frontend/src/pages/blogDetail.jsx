@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import HTMLReactParser from "html-react-parser";
 
 const blogDetail = () => {
   const locationData = useLocation();
@@ -12,7 +13,7 @@ const blogDetail = () => {
       <h4 className="text-2xl font-light mb-10">
         <span className="font-normal">Author:</span> {locationData.state.author}
       </h4>
-      <p>{locationData.state.content}</p>
+      <p>{HTMLReactParser(locationData.state.content)}</p>
     </div>
   );
 };
