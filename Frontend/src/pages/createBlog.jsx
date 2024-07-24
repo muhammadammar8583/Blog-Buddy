@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
-import JoditEditor from "jodit-react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import Input from "../reuseable/Input";
 import Button from "../reuseable/Button";
 import { useLocation } from "react-router-dom";
+import JoditEditor from "jodit-react";
 
 const createBlog = () => {
   const [title, setTitle] = useState("");
@@ -19,6 +19,14 @@ const createBlog = () => {
       setTitle(title), setAuthor(author), setContent(content), setIsEdit(true);
     }
   }, [location.state]);
+
+  const config = useMemo(
+    () => ({
+      readonly: false,
+      height: "500",
+    }),
+    []
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,13 +67,13 @@ const createBlog = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mt-10 overflow-y-scroll no-scrollbar">
+      <div className="mt-8">
         <h2 className="text-4xl text-center font-medium mb-10">
           {isEdit
             ? "Edit Your Blog"
             : "What's on your mind? Care to share with us!"}
         </h2>
-        <div className="">
+        <div className="w-full">
           <p className="text-2xl mb-4">Blog Title</p>
           <Input
             name="title"
@@ -85,15 +93,18 @@ const createBlog = () => {
           />
 
           <p className="text-2xl mb-4">Blog Description:</p>
+
           <JoditEditor
             ref={editor}
             name="content"
+            config={config}
+            tabIndex={1} // tabIndex of textarea
             value={content}
             onBlur={(newContent) => setContent(newContent)}
             onChange={(newContent) => {
               setContent(newContent);
             }}
-            className="mb-4 relative"
+            className="h-96 mb-4 relative"
           />
 
           <Button
