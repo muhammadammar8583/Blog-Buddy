@@ -1,5 +1,7 @@
 import { Blogs } from "../models/blogs.models.js";
 
+let date = new Date().toDateString();
+
 const handleCreateBlog = async (req, res) => {
   const { title, content, author } = req.body;
   try {
@@ -7,6 +9,7 @@ const handleCreateBlog = async (req, res) => {
       title,
       content,
       author,
+      date,
     });
     res.status(201).json({
       message: "Blog created successfully!",

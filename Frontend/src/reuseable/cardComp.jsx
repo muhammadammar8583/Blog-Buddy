@@ -20,9 +20,11 @@ const cardComp = ({ data, viewBlog, deleteBlog, updateBlog }) => {
           {data.author}
         </h6>
 
+        <p className="text-gray-700 dark:text-gray-400">{data.date}</p>
+
         <div
           className="mb-3 font-normal text-gray-700 dark:text-gray-400"
-          dangerouslySetInnerHTML={{ __html: data.content.slice(0, 60) }}
+          dangerouslySetInnerHTML={{ __html: data.content.slice(0, 160) }}
         />
 
         <Button

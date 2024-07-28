@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CardComp from "../reuseable/cardComp.jsx";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Blogs = () => {
   const [allBlogs, setAllBlogs] = useState([]);
@@ -20,16 +21,34 @@ const Blogs = () => {
     navigate(`/blogs/${e._id}`, { state: e });
   };
 
-  const deleteBlog = async (id) => {
-    try {
-      await fetch(`http://localhost:3000/blogs/${id}`, {
-        method: "DELETE",
-      });
-      //Update the state to remove the deleted blog
-      setAllBlogs(allBlogs.filter((blog) => blog._id !== id));
-    } catch (error) {
-      console.log(error);
-    }
+  const deleteBlog = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          fetch(`http://localhost:3000/blogs/${id}`, {
+            method: "DELETE",
+          });
+          //Update the state to remove the deleted blog
+          setAllBlogs(allBlogs.filter((blog) => blog._id !== id));
+        } catch (error) {
+          console.log(error);
+        }
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your blog has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   const updateBlog = async (blog) => {

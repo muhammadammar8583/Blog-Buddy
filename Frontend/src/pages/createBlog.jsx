@@ -3,6 +3,7 @@ import Input from "../reuseable/Input";
 import Button from "../reuseable/Button";
 import { useLocation } from "react-router-dom";
 import JoditEditor from "jodit-react";
+import Swal from "sweetalert2";
 
 const createBlog = () => {
   const [title, setTitle] = useState("");
@@ -24,6 +25,13 @@ const createBlog = () => {
     () => ({
       readonly: false,
       height: "500",
+      width: "91.6%",
+      enableDragAndDropFileToEditor: true,
+      imageDefaultWidth: 100,
+      uploader: {
+        insertImageAsBase64URI: true,
+        imagesExtensions: ["jpg", "png", "jpeg", "gif"],
+      },
     }),
     []
   );
@@ -56,9 +64,36 @@ const createBlog = () => {
       }
       if (response) {
         const data = await response.json();
+        {
+          isEdit
+            ? Swal.fire({
+                title: "Great!",
+                text: "Blog updated successfully!",
+                icon: "success",
+              })
+            : Swal.fire({
+                title: "Great!",
+                text: "Blog saved successfully!",
+                icon: "success",
+              });
+        }
         console.log(isEdit ? "Blog Updated" : "Blog saved:", data);
       } else {
-        console.error(isEdit ? "Failed to upate blog" : "Failed to save blog");
+        {
+          isEdit
+            ? Swal.fire({
+                title: "Oops!",
+                text: "Failed to update blog",
+                icon: "question",
+              })
+            : Swal.fire({
+                title: "Oops!",
+                text: "Failed to save blog",
+                icon: "question",
+              });
+        }
+
+        // console.error(isEdit ? "Failed to upate blog" : "Failed to save blog");
       }
     } catch (error) {
       console.log(error);
@@ -67,8 +102,8 @@ const createBlog = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mt-8">
-        <h2 className="text-4xl text-center font-medium mb-10">
+      <div className="ml-12 mt-8 h-screen">
+        <h2 className="text-4xl text-center font-medium mb-8">
           {isEdit
             ? "Edit Your Blog"
             : "What's on your mind? Care to share with us!"}
@@ -80,7 +115,7 @@ const createBlog = () => {
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="border-2 w-3/4 h-10 mb-10"
+            className="border-2 w-11/12 h-10 mb-10"
           />
 
           <p className="text-2xl mb-4">Blog Author:</p>
@@ -89,7 +124,7 @@ const createBlog = () => {
             id="author"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            className="border-2 w-3/4 h-10 mb-10"
+            className="border-2 w-11/12 h-10 mb-10"
           />
 
           <p className="text-2xl mb-4">Blog Description:</p>
@@ -104,7 +139,7 @@ const createBlog = () => {
             onChange={(newContent) => {
               setContent(newContent);
             }}
-            className="h-96 mb-4 relative"
+            className="mb-4 relative"
           />
 
           <Button
