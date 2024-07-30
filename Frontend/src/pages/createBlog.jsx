@@ -9,6 +9,7 @@ const createBlog = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
+  const [featureImage, setFeatureImage] = useState("");
   const [isEdit, setIsEdit] = useState(false);
 
   const location = useLocation();
@@ -38,7 +39,9 @@ const createBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const blog = { title, content, author };
+    let blog = { title, content, author };
+    let formdata = new FormData();
+    formdata.append("image", featureImage);
 
     try {
       let response;
@@ -92,8 +95,6 @@ const createBlog = () => {
                 icon: "question",
               });
         }
-
-        // console.error(isEdit ? "Failed to upate blog" : "Failed to save blog");
       }
     } catch (error) {
       console.log(error);
@@ -101,7 +102,7 @@ const createBlog = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} encType="multipart/form-data">
       <div className="ml-12 mt-8 h-screen">
         <h2 className="text-4xl text-center font-medium mb-8">
           {isEdit
@@ -109,8 +110,9 @@ const createBlog = () => {
             : "What's on your mind? Care to share with us!"}
         </h2>
         <div className="w-full">
-          <p className="text-2xl mb-4">Blog Title</p>
+          <p className="text-2xl mb-4">Blog title</p>
           <Input
+            type="text"
             name="title"
             id="title"
             value={title}
@@ -118,8 +120,9 @@ const createBlog = () => {
             className="border-2 w-11/12 h-10 mb-10"
           />
 
-          <p className="text-2xl mb-4">Blog Author:</p>
+          <p className="text-2xl mb-4">Blog author:</p>
           <Input
+            type="text"
             name="author"
             id="author"
             value={author}
@@ -127,7 +130,15 @@ const createBlog = () => {
             className="border-2 w-11/12 h-10 mb-10"
           />
 
-          <p className="text-2xl mb-4">Blog Description:</p>
+          <p className="text-2xl mb-4">Blog feature image:</p>
+          <Input
+            type="file"
+            name="file"
+            onChange={(e) => setFeatureImage(e.target.files[0])}
+            className="mb-10"
+          />
+
+          <p className="text-2xl mb-4">Blog description:</p>
 
           <JoditEditor
             ref={editor}
