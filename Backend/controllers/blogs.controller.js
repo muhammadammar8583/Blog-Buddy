@@ -4,12 +4,15 @@ let date = new Date().toDateString();
 
 const handleCreateBlog = async (req, res) => {
   const { title, content, author } = req.body;
+  const featureImage = req.file ? req.file.path : null;
+  console.log(req.file);
   try {
     const blog = await Blogs.create({
       title,
       content,
       author,
       date,
+      featureImage,
     });
     res.status(201).json({
       message: "Blog created successfully!",

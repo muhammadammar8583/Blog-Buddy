@@ -41,7 +41,10 @@ const createBlog = () => {
     e.preventDefault();
     let blog = { title, content, author };
     let formdata = new FormData();
-    formdata.append("image", featureImage);
+    formdata.append("featureImage", featureImage);
+    formdata.append("title", title);
+    formdata.append("content", content);
+    formdata.append("author", author);
 
     try {
       let response;
@@ -51,58 +54,48 @@ const createBlog = () => {
           {
             method: "PUT",
             body: JSON.stringify(blog),
-            headers: {
-              "Content-Type": "application/json",
-            },
+            // headers: {
+            //   "Content-Type": "application/json",
+            // },
           }
         );
       } else {
         response = await fetch("http://localhost:3000/blogs/createblog", {
           method: "POST",
-          body: JSON.stringify(blog),
-          headers: {
-            "Content-Type": "application/json",
-          },
+          body: formdata,
+          // body: JSON.stringify(blog),
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
         });
       }
       if (response) {
         const data = await response.json();
-        {
-          isEdit
-            ? Swal.fire({
-                title: "Great!",
-                text: "Blog updated successfully!",
-                icon: "success",
-              })
-            : Swal.fire({
-                title: "Great!",
-                text: "Blog saved successfully!",
-                icon: "success",
-              });
-        }
-        console.log(isEdit ? "Blog Updated" : "Blog saved:", data);
-      } else {
-        {
-          isEdit
-            ? Swal.fire({
-                title: "Oops!",
-                text: "Failed to update blog",
-                icon: "question",
-              })
-            : Swal.fire({
-                title: "Oops!",
-                text: "Failed to save blog",
-                icon: "question",
-              });
-        }
+        Swal.fire({
+          title: "Great!",
+          text: isEdit
+            ? "Blog updated successfully!"
+            : "Blog saved successfully!",
+          icon: "success",
+        });
+        console.log(data);
       }
     } catch (error) {
+      Swal.fire({
+        title: "Oops!",
+        text: isEdit ? "Failed to update blog" : "Failed to save blog",
+        icon: "error",
+      });
       console.log(error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
+    <form
+      action="/uploads"
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+    >
       <div className="ml-12 mt-8 h-screen">
         <h2 className="text-4xl text-center font-medium mb-8">
           {isEdit
@@ -133,7 +126,7 @@ const createBlog = () => {
           <p className="text-2xl mb-4">Blog feature image:</p>
           <Input
             type="file"
-            name="file"
+            name="featureImage"
             onChange={(e) => setFeatureImage(e.target.files[0])}
             className="mb-10"
           />

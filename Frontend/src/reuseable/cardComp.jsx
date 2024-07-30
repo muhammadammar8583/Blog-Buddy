@@ -7,8 +7,8 @@ const cardComp = ({ data, viewBlog, deleteBlog, updateBlog }) => {
       <a href="#">
         <img
           className="rounded-t-lg"
-          src="/docs/images/blog/image-1.jpg"
-          alt=""
+          src={data.featureImage}
+          alt="feature image"
         />
       </a>
       <div className="p-5">
