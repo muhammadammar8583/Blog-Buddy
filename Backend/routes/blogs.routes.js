@@ -27,7 +27,7 @@ router.get("/:id", handleGetSingleBlog);
 
 router.post("/createblog", upload.single("featureImage"), handleCreateBlog);
 
-router.put("/:id", handleUpdateBlog);
+router.put("/:id", upload.single("featureImage"), handleUpdateBlog);
 
 router.delete("/:id", handleDeleteBlog);
 

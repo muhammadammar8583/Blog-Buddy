@@ -25,11 +25,14 @@ const handleCreateBlog = async (req, res) => {
 
 const handleUpdateBlog = async (req, res) => {
   const { title, content, author } = req.body;
+  const featureImage = req.file ? req.file.path : null;
+  console.log(req.file);
   try {
     const blog = await Blogs.findByIdAndUpdate(req.params.id, {
       title,
       content,
       author,
+      featureImage,
     });
     res.status(200).json({
       message: "Blog updated successfully!",

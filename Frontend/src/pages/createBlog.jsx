@@ -18,7 +18,11 @@ const createBlog = () => {
   useEffect(() => {
     if (location.state) {
       const { title, author, content } = location.state;
-      setTitle(title), setAuthor(author), setContent(content), setIsEdit(true);
+      setTitle(title),
+        setAuthor(author),
+        setContent(content),
+        setFeatureImage(featureImage),
+        setIsEdit(true);
     }
   }, [location.state]);
 
@@ -53,21 +57,22 @@ const createBlog = () => {
           `http://localhost:3000/blogs/${location.state._id}`,
           {
             method: "PUT",
-            body: JSON.stringify(blog),
-            // headers: {
-            //   "Content-Type": "application/json",
-            // },
+            body: formdata,
           }
         );
+        setTitle("");
+        setAuthor("");
+        setContent("");
+        setFeatureImage("");
       } else {
         response = await fetch("http://localhost:3000/blogs/createblog", {
           method: "POST",
           body: formdata,
-          // body: JSON.stringify(blog),
-          // headers: {
-          //   "Content-Type": "application/json",
-          // },
         });
+        setTitle("");
+        setAuthor("");
+        setContent("");
+        setFeatureImage("");
       }
       if (response) {
         const data = await response.json();
