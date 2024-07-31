@@ -35,7 +35,7 @@ const createBlog = () => {
       imageDefaultWidth: 100,
       uploader: {
         insertImageAsBase64URI: true,
-        imagesExtensions: ["jpg", "png", "jpeg", "gif"],
+        imagesExtensions: ["jpg", "png", "jpeg", "gif", "Webp"],
       },
     }),
     []
@@ -43,12 +43,14 @@ const createBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let blog = { title, content, author };
+    // let blog = { title, content, author };
     let formdata = new FormData();
     formdata.append("featureImage", featureImage);
     formdata.append("title", title);
     formdata.append("content", content);
     formdata.append("author", author);
+
+    // if(isEdit&&!featureImage)
 
     try {
       let response;
