@@ -31,9 +31,7 @@ const handleUpdateBlog = async (req, res) => {
   try {
     const updatedData = { title, content, author };
     if (featureImage) updatedData.featureImage = featureImage;
-    const blog = await Blogs.findByIdAndUpdate(req.params.id, updatedData, {
-      new: true,
-    });
+    const blog = await Blogs.findByIdAndUpdate(req.params.id, updatedData);
     res.status(200).json({
       message: "Blog updated successfully!",
       blog,

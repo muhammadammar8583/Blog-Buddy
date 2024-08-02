@@ -7,12 +7,19 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
 import { Navigation } from "../helper/helper.jsx";
 import Button from "../reuseable/Button.jsx";
+import { useNavigate } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const gotoLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -68,6 +75,7 @@ const Navbar = () => {
             className={
               "px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             }
+            onClick={gotoLogin}
           />
         </div>
       </div>
