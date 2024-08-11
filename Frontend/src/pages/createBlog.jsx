@@ -29,10 +29,11 @@ const createBlog = () => {
   const config = useMemo(
     () => ({
       readonly: false,
-      height: "500",
+      height: "400",
       width: "91.6%",
       enableDragAndDropFileToEditor: true,
       imageDefaultWidth: 100,
+      showPlaceholder: false,
       uploader: {
         insertImageAsBase64URI: true,
         imagesExtensions: ["jpg", "png", "jpeg", "gif", "Webp"],
@@ -43,14 +44,11 @@ const createBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // let blog = { title, content, author };
     let formdata = new FormData();
     formdata.append("featureImage", featureImage);
     formdata.append("title", title);
     formdata.append("content", content);
     formdata.append("author", author);
-
-    // if(isEdit&&!featureImage)
 
     try {
       let response;
@@ -78,13 +76,15 @@ const createBlog = () => {
       }
       if (response) {
         const data = await response.json();
-        Swal.fire({
-          title: "Great!",
-          text: isEdit
-            ? "Blog updated successfully!"
-            : "Blog saved successfully!",
-          icon: "success",
-        });
+        if (title && author && content) {
+          Swal.fire({
+            title: "Great!",
+            text: isEdit
+              ? "Blog updated successfully!"
+              : "Blog saved successfully!",
+            icon: "success",
+          });
+        }
         console.log(data);
       }
     } catch (error) {
@@ -102,62 +102,70 @@ const createBlog = () => {
       action="/uploads"
       onSubmit={handleSubmit}
       encType="multipart/form-data"
+      className="h-screen"
     >
-      <div className="ml-12 mt-8 h-screen">
-        <h2 className="text-4xl text-center font-medium mb-8">
-          {isEdit
-            ? "Edit Your Blog"
-            : "What's on your mind? Care to share with us!"}
-        </h2>
-        <div className="w-full">
-          <p className="text-2xl mb-4">Blog title</p>
-          <Input
-            type="text"
-            name="title"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="border-2 w-11/12 h-10 mb-10"
-          />
-
-          <p className="text-2xl mb-4">Blog author:</p>
-          <Input
-            type="text"
-            name="author"
-            id="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            className="border-2 w-11/12 h-10 mb-10"
-          />
-
-          <p className="text-2xl mb-4">Blog feature image:</p>
-          <Input
-            type="file"
-            name="featureImage"
-            onChange={(e) => setFeatureImage(e.target.files[0])}
-            className="mb-10"
-          />
-
-          <p className="text-2xl mb-4">Blog description:</p>
-
-          <JoditEditor
-            ref={editor}
-            name="content"
-            config={config}
-            tabIndex={1} // tabIndex of textarea
-            value={content}
-            onBlur={(newContent) => setContent(newContent)}
-            onChange={(newContent) => {
-              setContent(newContent);
-            }}
-            className="mb-4 relative"
-          />
-
-          <Button
-            type="submit"
-            className="bg-blue-600 text-white font-medium p-2 rounded-xl absolute left-1/2"
-            btnText={isEdit ? "Update Blog" : "Save Blog"}
-          />
+      <div className="ml-10 mt-4 max-h-screen min-h-screen">
+        <div className="h-screen">
+          <h2 className="text-4xl text-center font-medium ">
+            {isEdit
+              ? "Edit Your Blog"
+              : "What's on your mind? Care to share with us!"}
+          </h2>
+          <div className="">
+            <div>
+              <p className="text-2xl mb-2">Blog title:</p>
+              <Input
+                type="text"
+                name="title"
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="border-2 w-11/12 h-10 mb-5"
+              />
+            </div>
+            <div>
+              <p className="text-2xl mb-2">Blog author:</p>
+              <Input
+                type="text"
+                name="author"
+                id="author"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                className="border-2 w-11/12 h-10 mb-5"
+              />
+            </div>
+            <div>
+              <p className="text-2xl mb-2">Blog feature image:</p>
+              <Input
+                type="file"
+                name="featureImage"
+                onChange={(e) => setFeatureImage(e.target.files[0])}
+                className="mb-5"
+              />
+            </div>
+            <div className="pb-2">
+              <p className="text-2xl mb-2">Blog description:</p>
+              <JoditEditor
+                ref={editor}
+                name="content"
+                config={config}
+                tabIndex={1} // tabIndex of textarea
+                value={content}
+                onBlur={(newContent) => setContent(newContent)}
+                onChange={(newContent) => {
+                  setContent(newContent);
+                }}
+                className="mb-1"
+              />
+            </div>
+            <div className="flex justify-center items-center pb-4">
+              <Button
+                type="submit"
+                className="bg-blue-600 text-white font-medium p-2 rounded-xl left-1/2"
+                btnText={isEdit ? "Update Blog" : "Save Blog"}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </form>

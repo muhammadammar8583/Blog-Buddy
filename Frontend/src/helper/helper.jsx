@@ -1,4 +1,3 @@
-import Home from "../pages/Home.jsx";
 import CreateBlog from "../pages/createBlog.jsx";
 import BlogDetail from "../pages/blogDetail.jsx";
 import About from "../pages/About.jsx";
@@ -9,7 +8,6 @@ import Login from "../pages/Login.jsx";
 import Signup from "../pages/Signup.jsx";
 
 const routesName = [
-  { path: "/", element: <Home /> },
   { path: "/blogs", element: <Blogs /> },
   { path: "/createblog", element: <CreateBlog /> },
   { path: "/createblog/:id", element: <CreateBlog /> },
@@ -22,7 +20,6 @@ const routesName = [
 ];
 
 const Navigation = [
-  { to: "/", element: "Home" },
   { to: "/blogs", element: "Blogs" },
   { to: "/createblog", element: "Create Blog" },
   { to: "/about", element: "About" },

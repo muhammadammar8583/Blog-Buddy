@@ -40,7 +40,7 @@ const Contact = () => {
           Contact sales
         </h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">
-          Aute magna irure deserunt veniam aliqua magna enim voluptate.
+          Have any query! Feel free to contact us.
         </p>
       </div>
       <form

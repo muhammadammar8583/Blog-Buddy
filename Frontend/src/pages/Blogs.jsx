@@ -56,26 +56,28 @@ const Blogs = () => {
   };
 
   return (
-    <div className="flex flex-wrap">
-      {allBlogs
-        ? allBlogs.map((data, index) => {
-            return (
-              <CardComp
-                key={index}
-                data={data}
-                viewBlog={() => {
-                  getBlog(data);
-                }}
-                deleteBlog={() => {
-                  deleteBlog(data._id);
-                }}
-                updateBlog={() => {
-                  updateBlog(data);
-                }}
-              />
-            );
-          })
-        : "Loading"}
+    <div className="h-screen w-full">
+      <div className="flex flex-wrap">
+        {allBlogs
+          ? allBlogs.map((data, index) => {
+              return (
+                <CardComp
+                  key={index}
+                  data={data}
+                  viewBlog={() => {
+                    getBlog(data);
+                  }}
+                  deleteBlog={() => {
+                    deleteBlog(data._id);
+                  }}
+                  updateBlog={() => {
+                    updateBlog(data);
+                  }}
+                />
+              );
+            })
+          : "Loading"}
+      </div>
     </div>
   );
 };
