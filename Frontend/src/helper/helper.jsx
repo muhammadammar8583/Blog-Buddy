@@ -8,7 +8,7 @@ import Login from "../pages/Login.jsx";
 import Signup from "../pages/Signup.jsx";
 
 const routesName = [
-  { path: "/blogs", element: <Blogs /> },
+  { path: "/", element: <Blogs /> },
   { path: "/createblog", element: <CreateBlog /> },
   { path: "/createblog/:id", element: <CreateBlog /> },
   { path: "/blogs/:id", element: <BlogDetail /> },
@@ -20,7 +20,7 @@ const routesName = [
 ];
 
 const Navigation = [
-  { to: "/blogs", element: "Blogs" },
+  { to: "/", element: "Blogs" },
   { to: "/createblog", element: "Create Blog" },
   { to: "/about", element: "About" },
   { to: "/contact", element: "Contact" },
