@@ -15,7 +15,7 @@ const routesName = [
   { path: "/about", element: <About /> },
   { path: "/contact", element: <Contact /> },
   { path: "/login", element: <Login /> },
-  { path: "/singup", element: <Signup /> },
+  { path: "/signup", element: <Signup /> },
   { path: "*", element: <Error404 /> },
 ];
 

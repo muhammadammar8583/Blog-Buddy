@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../reuseable/Input";
 import { useNavigate } from "react-router-dom";
 import Button from "../reuseable/Button";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -15,12 +16,34 @@ const Login = () => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
+    let response = await fetch("http://localhost:3000/user/login", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    });
+    if (response) {
+      let data = await response.json();
+      Swal.fire({
+        icon: "success",
+        title: "Welcome!",
+        text: "It is nice to see you back again!",
+      });
+      navigate("/");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: "There is no user like this!",
+      });
+    }
   };
 
   const gotoSignup = () => {
-    navigate("/singup");
+    navigate("/signup");
   };
   return (
     <section className="">

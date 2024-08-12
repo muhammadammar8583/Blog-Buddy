@@ -23,5 +23,7 @@ dbConnect;
 
 //Routes
 import blogRoutes from "./routes/blogs.routes.js";
+import userRoutes from "./routes/users.routes.js";
 
 app.use("/blogs", blogRoutes);
+app.use("/user", userRoutes);

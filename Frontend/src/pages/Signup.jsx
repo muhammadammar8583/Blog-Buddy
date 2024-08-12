@@ -1,20 +1,43 @@
 import React, { useState } from "react";
 import Input from "../reuseable/Input.jsx";
 import Button from "../reuseable/Button.jsx";
+import Swal from "sweetalert2";
 
 const Signup = () => {
   const [registerData, setRegisterData] = useState({
     email: "email",
     password: "password",
-    confirmPassword: "confirmPassword",
   });
 
   const handleOnChange = (e) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    let response = await fetch("http://localhost:3000/user", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(registerData),
+    });
+
+    if (response) {
+      const data = await response.json();
+      Swal.fire({
+        icon: "success",
+        title: "Great!",
+        text: "User created Successfully!",
+      });
+      console.log(data);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: "Error creating user!",
+      });
+    }
   };
 
   return (
@@ -24,7 +47,7 @@ const Signup = () => {
           <h1 className="text-center text-3xl font-serif font-extrabold mb-4">
             SignUp
           </h1>
-          <form action="POST" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="">
               <label className="font-serif font-bold text-xl">
                 Your email:
@@ -41,17 +64,6 @@ const Signup = () => {
               <Input
                 type="password"
                 name="password"
-                onChange={(e) => handleOnChange(e)}
-                className="mt-3 mb-3 rounded-md bg-gray-600 p-2 w-60 border border-gray-400 outline-none focus:border-blue-700"
-              />
-            </div>
-            <div className="">
-              <label className="font-serif font-bold text-xl">
-                Confirm password:
-              </label>
-              <Input
-                type="password"
-                name="confirmPassword"
                 onChange={(e) => handleOnChange(e)}
                 className="mt-3 mb-3 rounded-md bg-gray-600 p-2 w-60 border border-gray-400 outline-none focus:border-blue-700"
               />
