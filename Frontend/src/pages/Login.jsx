@@ -33,8 +33,9 @@ const Login = () => {
         icon: "success",
         title: "Welcome!",
         text: "It is nice to see you back again!",
+      }).then(() => {
+        navigate("/");
       });
-      navigate("/");
     } else {
       Swal.fire({
         icon: "error",
