@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "../reuseable/Input";
 import { useNavigate } from "react-router-dom";
 import Button from "../reuseable/Button";
@@ -8,6 +8,7 @@ const Login = () => {
   const [loginData, setLoginData] = useState({
     email: "email",
     password: "password",
+    token: localStorage.getItem("token"),
   });
 
   const navigate = useNavigate();
@@ -20,13 +21,14 @@ const Login = () => {
     e.preventDefault();
     let response = await fetch("http://localhost:3000/user/login", {
       method: "POST",
+      body: JSON.stringify(loginData),
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(loginData),
     });
     if (response) {
-      let data = await response.json();
+      const data = await response.json();
+      console.log(data);
       Swal.fire({
         icon: "success",
         title: "Welcome!",
@@ -41,6 +43,21 @@ const Login = () => {
       });
     }
   };
+
+  // useEffect(() => {
+  //   const getLoginData = async () => {
+  //     const response = await fetch("http://localhost:3000/user/login", {
+  //       method: "POST",
+  //       body: JSON.stringify({ token: localStorage.getItem("token") }),
+  //       headers: {
+  //         "Content-type": "application/json",
+  //       },
+  //     });
+  //     const data = response.json();
+  //     console.log(data);
+  //   };
+  //   getLoginData();
+  // }, []);
 
   const gotoSignup = () => {
     navigate("/signup");

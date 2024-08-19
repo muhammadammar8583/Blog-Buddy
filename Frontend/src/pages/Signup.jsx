@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 const Signup = () => {
   const [registerData, setRegisterData] = useState({
+    name: "name",
     email: "email",
     password: "password",
   });
@@ -17,14 +18,17 @@ const Signup = () => {
     e.preventDefault();
     let response = await fetch("http://localhost:3000/user", {
       method: "POST",
+      body: JSON.stringify(registerData),
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(registerData),
     });
 
     if (response) {
       const data = await response.json();
+      const token = JSON.stringify(data.token);
+      localStorage.setItem("token", token);
+
       Swal.fire({
         icon: "success",
         title: "Great!",
@@ -48,6 +52,15 @@ const Signup = () => {
             SignUp
           </h1>
           <form onSubmit={handleSubmit}>
+            <div className="">
+              <label className="font-serif font-bold text-xl">Name:</label>
+              <Input
+                type="text"
+                name="name"
+                onChange={(e) => handleOnChange(e)}
+                className="mt-3 mb-3 rounded-md bg-gray-600 p-2 w-60 border border-gray-400 outline-none focus:border-blue-700"
+              />
+            </div>
             <div className="">
               <label className="font-serif font-bold text-xl">
                 Your email:
